@@ -1,35 +1,14 @@
 var express = require('express');
-var bodyParser = require('body-parser');
-var fs = require('fs');
 var app = express();
-app.use(bodyParser.urlencoded({extended:false}));
-app.locals.pretty = true;
+
+app.locals.pretty = true;  // line break. don't forget 's' in locals
 app.set('views','./views_file');
 app.set('view engine','pug');
-app.get('/topic/new', function(req,res){
-  res.render('news');
-});
-app.get('/topic', function(req,res){
-  fs.readdir('data', function(err,files){
-    if(err){
-      console.log(err);
-      res.status(500).send('Internet Server Error');
-    }
-    res.render('view', {topics:files});
-  })
-});
-app.post('/topic', function(req,res){
-  var title = req.body.title;
-  var description = req.body.description;
-  fs.writeFile('data/'+title, description, function(err){
-    if(err){
-      res.status(500).send('Internet Server Error');
-    }
-    res.send('hi PJ, You made it');
-  })
 
+app.get('/topic/new', function(req,res){       //path, callback
+  res.render('news');
 });
 
 app.listen(3000, function(){
-  console.log('Connected, 3000!');
+  console.log('Connected, 3000!');  //port connection
 });
